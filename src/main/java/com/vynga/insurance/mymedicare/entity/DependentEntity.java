@@ -8,12 +8,14 @@ import javax.annotation.Generated;
 import javax.persistence.*;
 import java.time.LocalDate;
 @Entity
+@Table(name="Dependents")
 public class DependentEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private  int dip ;
     private String dname;
     private LocalDate dob;
+    private int eid;
 /*
    @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "eid", nullable = false)
@@ -24,7 +26,13 @@ public class DependentEntity {
     public DependentEntity() {
     }
 
+    public int getEid() {
+        return eid;
+    }
 
+    public void setEid(int eid) {
+        this.eid = eid;
+    }
 
     public int getDip() {
         return dip;

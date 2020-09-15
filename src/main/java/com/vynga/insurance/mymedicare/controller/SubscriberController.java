@@ -18,6 +18,9 @@ public class SubscriberController {
 
 
     /**
+     *Controller for Creating,Reading,Udating and Deleting Health Enrollee details
+     * like
+     * name,dob,phoneno
      *
      */
     @Autowired
