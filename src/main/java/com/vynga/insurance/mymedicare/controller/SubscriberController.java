@@ -1,5 +1,7 @@
 package com.vynga.insurance.mymedicare.controller;
 
+import com.vynga.insurance.mymedicare.dao.InsuranceRepository;
+import com.vynga.insurance.mymedicare.entity.InsuranceEntity;
 import com.vynga.insurance.mymedicare.entity.SubscriberEntity;
 import com.vynga.insurance.mymedicare.model.SubscriberModel;
 import com.vynga.insurance.mymedicare.service.SubscriberService;
@@ -10,12 +12,18 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.websocket.server.PathParam;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @RestController
 public class SubscriberController {
 
+
+
+    @Autowired
+    InsuranceRepository insuranceRepository;
 
     /**
      *Controller for Creating,Reading,Udating and Deleting Health Enrollee details
@@ -28,6 +36,19 @@ public class SubscriberController {
     @PostMapping ("/subscriber")
     public ResponseEntity<SubscriberEntity> saveSubscriber(@RequestBody SubscriberModel subscriberModel)
     {
+
+      Set<InsuranceEntity> insuranceEntityHashSet =  new HashSet<InsuranceEntity>();
+
+     subscriberModel.getInsuranceEntityHashSet().forEach(x ->  {
+
+        if(insuranceRepository.findById(x.getId()).isPresent()){
+            InsuranceEntity insuranceEntity = insuranceRepository.findById(x.getId()).get();
+            insuranceEntityHashSet.add(insuranceEntity);
+        }
+     }
+    );
+        subscriberModel.getInsuranceEntityHashSet().clear();
+        subscriberModel.getInsuranceEntityHashSet().addAll(insuranceEntityHashSet);
         ResponseEntity responseEntity;
             SubscriberEntity subscriberEntity = subscriberService.CreateSubscriber(subscriberModel);
             responseEntity =  new ResponseEntity(subscriberEntity, HttpStatus.CREATED);

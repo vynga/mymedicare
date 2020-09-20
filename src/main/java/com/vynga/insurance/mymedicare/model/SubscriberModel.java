@@ -2,10 +2,11 @@ package com.vynga.insurance.mymedicare.model;
 
 
 
-import com.sun.istack.Nullable;
 
-import javax.persistence.Column;
+import com.vynga.insurance.mymedicare.entity.InsuranceEntity;
+
 import java.time.LocalDate;
+import java.util.Set;
 
 
 public class SubscriberModel {
@@ -14,8 +15,16 @@ public class SubscriberModel {
     private String name;
     private LocalDate dob;
     private  boolean activationStatus=true;
-
+    private Set<InsuranceEntity> insuranceEntityHashSet;
     private String phone ;
+
+    public Set<InsuranceEntity> getInsuranceEntityHashSet() {
+        return insuranceEntityHashSet;
+    }
+
+    public void setInsuranceEntityHashSet(Set<InsuranceEntity> insuranceEntityHashSet) {
+        this.insuranceEntityHashSet = insuranceEntityHashSet;
+    }
 
     public SubscriberModel() {
     }

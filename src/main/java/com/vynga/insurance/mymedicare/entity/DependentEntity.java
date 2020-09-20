@@ -1,70 +1,75 @@
 package com.vynga.insurance.mymedicare.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
 
-import javax.annotation.Generated;
 import javax.persistence.*;
 import java.time.LocalDate;
 @Entity
-@Table(name="Dependents")
+@Table(name="dependents")
 public class DependentEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private  int dip ;
+    private  int id ;
     private String dname;
+    @Transient
+    private int subid;
     private LocalDate dob;
-    private int eid;
-/*
-   @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "eid", nullable = false)
-    @OnDelete(action = OnDeleteAction.CASCADE )
-    @JsonIgnore
-    private SubscriberEntity subscriberEntity;
-*/
-    public DependentEntity() {
+
+
+    public int getId() {
+        return id;
     }
 
-    public int getEid() {
-        return eid;
-    }
-
-    public void setEid(int eid) {
-        this.eid = eid;
-    }
-
-    public int getDip() {
-        return dip;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getDname() {
         return dname;
     }
 
-    public LocalDate getDob() {
-        return dob;
-    }
-/*
-    public SubscriberEntity getSubscriberEntity() {
-        return subscriberEntity;
-    }
-
-    public void setSubscriberEntity(SubscriberEntity subscriberEntity) {
-        this.subscriberEntity = subscriberEntity;
-    }
-*/
-    public void setDip(int dip) {
-        this.dip = dip;
-    }
-
     public void setDname(String dname) {
         this.dname = dname;
+    }
+
+    public int getSubid() {
+        return subid;
+    }
+
+    public void setSubid(int subid) {
+        this.subid = subid;
+    }
+
+    public LocalDate getDob() {
+        return dob;
     }
 
     public void setDob(LocalDate dob) {
         this.dob = dob;
     }
+
+    public SubscriberEntity getSubscriber() {
+        return subscriber;
+    }
+
+    public void setSubscriber(SubscriberEntity subscriber) {
+        this.subscriber = subscriber;
+    }
+
+
+ @JsonBackReference
+ @ManyToOne(fetch = FetchType.LAZY, optional = false)
+ @JoinColumn(name = "subscriber_id")
+    private SubscriberEntity subscriber;
+    public DependentEntity() {
+    }
+
+
+
+
+
+
 
 
 

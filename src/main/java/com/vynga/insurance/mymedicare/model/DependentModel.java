@@ -1,31 +1,42 @@
 package com.vynga.insurance.mymedicare.model;
 
-import javax.persistence.OneToMany;
+import com.vynga.insurance.mymedicare.entity.SubscriberEntity;
+
 import java.time.LocalDate;
+
 
 public class DependentModel {
 
-    private  int dip ;
+    private  int id ;
     private String dname;
+    private int subid;
     private LocalDate dob;
-    private int eid;
+    private SubscriberEntity subscriber;
+
+    public SubscriberEntity getSubscriber() {
+        return subscriber;
+    }
+
+    public void setSubscriber(SubscriberEntity subscriber) {
+        this.subscriber = subscriber;
+    }
+
+    public DependentModel(int id, String dname, int subid, LocalDate dob) {
+        this.id = id;
+        this.dname = dname;
+        this.subid = subid;
+        this.dob = dob;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public DependentModel() {
-    }
-
-    public DependentModel(int dip, String dname, LocalDate dob, int eid) {
-        this.dip = dip;
-        this.dname = dname;
-        this.dob = dob;
-        this.eid = eid;
-    }
-
-    public int getDip() {
-        return dip;
-    }
-
-    public void setDip(int dip) {
-        this.dip = dip;
     }
 
     public String getDname() {
@@ -36,6 +47,14 @@ public class DependentModel {
         this.dname = dname;
     }
 
+    public int getSubid() {
+        return subid;
+    }
+
+    public void setSubid(int subid) {
+        this.subid = subid;
+    }
+
     public LocalDate getDob() {
         return dob;
     }
@@ -43,22 +62,6 @@ public class DependentModel {
     public void setDob(LocalDate dob) {
         this.dob = dob;
     }
-
-    public int getEid() {
-        return eid;
-    }
-
-    public void setEid(int eid) {
-        this.eid = eid;
-    }
-
-    @Override
-    public String toString() {
-        return "DependentModel{" +
-                "dip=" + dip +
-                ", dname='" + dname + '\'' +
-                ", dob=" + dob +
-                ", eid=" + eid +
-                '}';
-    }
 }
+
+

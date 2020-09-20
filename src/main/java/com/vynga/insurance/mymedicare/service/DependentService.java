@@ -1,7 +1,9 @@
 package com.vynga.insurance.mymedicare.service;
 
 import com.vynga.insurance.mymedicare.dao.DependentRepository;
+import com.vynga.insurance.mymedicare.dao.MedicareRepository;
 import com.vynga.insurance.mymedicare.entity.DependentEntity;
+import com.vynga.insurance.mymedicare.entity.SubscriberEntity;
 import com.vynga.insurance.mymedicare.model.DependentModel;
 import com.vynga.insurance.mymedicare.util.DependentMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,11 +17,18 @@ public class DependentService {
     @Autowired
     private DependentRepository  dependentRepository;
     @Autowired
+    private MedicareRepository medicareRepository;
+    @Autowired
     private DependentMapper dependentMapper;
     public DependentEntity CreateDependent(DependentModel dependentModel)
     {
         DependentEntity dependentEntity=dependentMapper.toDependentEntity(dependentModel);
-        dependentEntity=dependentRepository.save(dependentEntity);
+
+        if(medicareRepository.findById(dependentModel.getSubid()).isPresent()) {
+            SubscriberEntity subscriber = medicareRepository.findById(dependentModel.getSubid()).get();
+            dependentEntity.setSubscriber(subscriber);
+            dependentEntity = dependentRepository.save(dependentEntity);
+        }
        return  dependentEntity;
 
 
@@ -34,8 +43,10 @@ public class DependentService {
     public void updateDependentById(DependentModel dependentModel,int id)
     {
         DependentEntity dependentEntity=dependentMapper.toDependentEntity(dependentModel);
-        dependentEntity.setDip(id);
-        dependentRepository.save(dependentEntity);
+        if(medicareRepository.findById(id).isPresent()) {
+            dependentEntity.setSubscriber(medicareRepository.findById(id).get());
+            dependentRepository.save(dependentEntity);
+        }
 
     }
     public Optional getDependentById(int id)

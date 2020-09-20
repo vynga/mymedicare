@@ -22,7 +22,7 @@ spring:
   jpa:
     generate-ddl: true
     hibernate:
-      ddl-auto: update
+      ddl-auto: create
       dialect: org.hibernate.dialect.MySQL5InnoDBDialect
     properties:
       hibernate:
